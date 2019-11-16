@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -17,8 +17,10 @@
             android:layout_height="60dp"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
+            android:background="@color/colorBlue"
             android:onClick="clickCreateNewButton"
-            android:text="@string/record_audio_button" />
+            android:text="@string/record_audio_button"
+            android:textColor="@color/colorWhite" />
 
         <Button
             android:id="@+id/audio_list_button_id"
@@ -26,8 +28,10 @@
             android:layout_height="60dp"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
+            android:background="@color/colorBlue"
             android:onClick="clickListAudioButton"
-            android:text="@string/audio_list_button" />
+            android:text="@string/audio_list_button"
+            android:textColor="@color/colorWhite" />
 
         <Button
             android:id="@+id/settings_button_id"
@@ -35,7 +39,9 @@
             android:layout_height="60dp"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
+            android:background="@color/colorBlue"
             android:onClick="clickSettingsButton"
-            android:text="@string/settings_button" />
+            android:text="@string/settings_button"
+            android:textColor="@color/colorWhite" />
     </LinearLayout>
-</ScrollView>
+</LinearLayout>

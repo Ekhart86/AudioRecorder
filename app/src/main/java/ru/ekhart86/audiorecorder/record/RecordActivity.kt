@@ -28,7 +28,7 @@ class RecordActivity : AppCompatActivity() {
 
     private lateinit var mStartRecordButton: Button
     private lateinit var mStopRecordButton: Button
-    private lateinit var myAudioRecorder: MediaRecorder
+    private var myAudioRecorder: MediaRecorder? = null
     private lateinit var mOutputFile: String
     private lateinit var dbHelper: DBHelper
 
@@ -36,22 +36,19 @@ class RecordActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_record)
-        //Запись в каталог внешнего кэша
-        mOutputFile = externalCacheDir!!.absolutePath
-        mOutputFile += "/audiorecordtest.3gp"
-        println(mOutputFile)
+        //Путь до папки с кэшем
+        mOutputFile = "${externalCacheDir!!.absolutePath}/audiorecordtest.3gp"
+
+
         ActivityCompat.requestPermissions(
             this, permissions,
             REQUEST_RECORD_AUDIO_PERMISSION
         )
         mStartRecordButton = findViewById(R.id.start_record_button_id)
         mStopRecordButton = findViewById(R.id.stop_record_button_id)
-        myAudioRecorder = MediaRecorder()
-        myAudioRecorder.setAudioSource(MediaRecorder.AudioSource.MIC)
-        myAudioRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
-        myAudioRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB)
-        myAudioRecorder.setOutputFile(mOutputFile)
+
         mStopRecordButton.isEnabled = false
+        mStopRecordButton.setBackgroundColor(resources.getColor(R.color.colorGray))
     }
 
     //Проверить есть ли разрешение от пользователя на запись аудио
@@ -72,20 +69,31 @@ class RecordActivity : AppCompatActivity() {
 
     fun clickStartRecordButton(v: View) {
 
-        myAudioRecorder.prepare()
-        myAudioRecorder.start()
+        myAudioRecorder = MediaRecorder()
+        myAudioRecorder!!.setAudioSource(MediaRecorder.AudioSource.MIC)
+        myAudioRecorder!!.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
+        myAudioRecorder!!.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB)
+        myAudioRecorder!!.setOutputFile(mOutputFile)
+        myAudioRecorder!!.prepare()
+        myAudioRecorder!!.start()
         mStartRecordButton.isEnabled = false
         mStopRecordButton.isEnabled = true
+        mStartRecordButton.setBackgroundColor(resources.getColor(R.color.colorGray))
+        mStopRecordButton.setBackgroundColor(resources.getColor(R.color.colorBlue))
         Toast.makeText(applicationContext, "Запись началась", Toast.LENGTH_LONG).show()
     }
 
     //Остановить запись и сохранить результат в базу данных
     fun clickStopRecordButton(v: View) {
         dbHelper = DBHelper(this)
-        myAudioRecorder.stop()
-        myAudioRecorder.release()
+        myAudioRecorder!!.stop()
+        myAudioRecorder!!.release()
+        myAudioRecorder = null
         mStartRecordButton.isEnabled = true
         mStopRecordButton.isEnabled = false
+
+        mStartRecordButton.setBackgroundColor(resources.getColor(R.color.colorBlue))
+        mStopRecordButton.setBackgroundColor(resources.getColor(R.color.colorGray))
 
         val recordData = readFileAsTextUsingInputStream(mOutputFile)
         val date = Calendar.getInstance().time

@@ -10,8 +10,10 @@
         android:layout_height="60dp"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
+        android:background="@color/colorBlue"
         android:onClick="clickStartRecordButton"
-        android:text="@string/start_record_button" />
+        android:text="@string/start_record_button"
+        android:textColor="@color/colorWhite" />
 
     <Button
         android:id="@+id/stop_record_button_id"
@@ -19,7 +21,9 @@
         android:layout_height="60dp"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
+        android:background="@color/colorBlue"
         android:onClick="clickStopRecordButton"
-        android:text="@string/stop_record_button" />
+        android:text="@string/stop_record_button"
+        android:textColor="@color/colorWhite" />
 
 </LinearLayout>
