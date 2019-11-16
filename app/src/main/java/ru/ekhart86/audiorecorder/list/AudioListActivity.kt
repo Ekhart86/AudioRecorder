@@ -36,10 +36,9 @@ class AudioListActivity : AppCompatActivity() {
             val intent =
                 Intent(this@AudioListActivity, PlayActivity::class.java)
             intent.putExtra("id", selectedRecord.id)
-//            intent.putExtra("value", selectedRecord.g)
-//            intent.putExtra("date", selectedRecord.getValueCommand())
+            intent.putExtra("value", selectedRecord.value)
+            intent.putExtra("date", selectedRecord.date)
             startActivity(intent)
-            println("Выбрали")
         }
         listViewRecords.onItemClickListener = itemListener
         getFullListCommands()
