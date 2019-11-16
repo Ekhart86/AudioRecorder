@@ -8,23 +8,23 @@
         android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#20B2AA"
+        android:background="@color/colorWhite"
         android:gravity="center">
 
         <TextView
-            android:id="@+id/record_header_detail_id"
+            android:id="@+id/date_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
+            android:text="@string/date"
             android:textColor="#000"
             android:textSize="20sp" />
-
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#20B2AA"
+        android:background="@color/colorWhite"
         android:gravity="center">
 
         <TextView
@@ -47,8 +47,10 @@
             android:layout_height="60dp"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
+            android:background="@color/colorBlue"
             android:onClick="clickPlayButton"
-            android:text="@string/play_button" />
+            android:text="@string/play_button"
+            android:textColor="@color/colorWhite" />
 
         <Button
             android:id="@+id/remove_button_id"
@@ -56,8 +58,10 @@
             android:layout_height="60dp"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
+            android:background="@color/colorBlue"
             android:onClick="clickRemoveButton"
-            android:text="@string/remove_button" />
+            android:text="@string/remove_button"
+            android:textColor="@color/colorWhite" />
 
     </LinearLayout>
 </LinearLayout>

@@ -21,7 +21,9 @@ class AudioListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_list_audio)
-
+        //Добавляем заголовок
+        val actionBar = supportActionBar
+        actionBar!!.title = "Все записи"
         listRecords.addAll(getFullListCommands())
         // получаем элемент ListView
         listViewRecords = findViewById(R.id.all_audio_records)
@@ -52,7 +54,7 @@ class AudioListActivity : AppCompatActivity() {
 
         if (cursor.moveToFirst()) {
             val idIndex = cursor.getColumnIndex(DBHelper.KEY_ID)
-            val nameIndex = cursor.getColumnIndex(DBHelper.KEY_VALUE)
+            val valueIndex = cursor.getColumnIndex(DBHelper.KEY_VALUE)
             val dateIndex = cursor.getColumnIndex(DBHelper.KEY_DATE)
             println(dateIndex)
             do {
@@ -60,7 +62,7 @@ class AudioListActivity : AppCompatActivity() {
                     "mLog",
                     "ID = ${cursor.getInt(idIndex)} + , date = ${cursor.getString(dateIndex)}"
                 )
-                list.add(Record(cursor.getInt(idIndex), cursor.getString(dateIndex)))
+                list.add(Record(cursor.getInt(idIndex), cursor.getString(dateIndex),cursor.getString(valueIndex)))
             } while (cursor.moveToNext())
         } else
             Log.d("mLog", "0 rows")

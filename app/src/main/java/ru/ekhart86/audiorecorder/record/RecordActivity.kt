@@ -5,6 +5,7 @@ import android.content.ContentValues
 import android.content.pm.PackageManager
 import android.media.MediaRecorder
 import android.os.Bundle
+import android.util.Base64
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
@@ -22,7 +23,6 @@ private const val REQUEST_RECORD_AUDIO_PERMISSION = 200
 class RecordActivity : AppCompatActivity() {
 
 
-    // Requesting permission to RECORD_AUDIO
     private var permissionToRecordAccepted = false
     private var permissions: Array<String> = arrayOf(Manifest.permission.RECORD_AUDIO)
 
@@ -36,9 +36,11 @@ class RecordActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_record)
+        //Добавляем заголовок
+        val actionBar = supportActionBar
+        actionBar!!.title = "Новая запись"
         //Путь до папки с кэшем
-        mOutputFile = "${externalCacheDir!!.absolutePath}/audiorecordtest.3gp"
-
+        mOutputFile = "${externalCacheDir!!.absolutePath}/audioRecord.3gp"
 
         ActivityCompat.requestPermissions(
             this, permissions,
@@ -68,7 +70,7 @@ class RecordActivity : AppCompatActivity() {
 
 
     fun clickStartRecordButton(v: View) {
-
+        //Создаём обьект рекордера при каждой записи
         myAudioRecorder = MediaRecorder()
         myAudioRecorder!!.setAudioSource(MediaRecorder.AudioSource.MIC)
         myAudioRecorder!!.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
@@ -88,6 +90,7 @@ class RecordActivity : AppCompatActivity() {
         dbHelper = DBHelper(this)
         myAudioRecorder!!.stop()
         myAudioRecorder!!.release()
+        //Уничтожаем обьект рекордера после каждой записи
         myAudioRecorder = null
         mStartRecordButton.isEnabled = true
         mStopRecordButton.isEnabled = false
@@ -95,7 +98,7 @@ class RecordActivity : AppCompatActivity() {
         mStartRecordButton.setBackgroundColor(resources.getColor(R.color.colorBlue))
         mStopRecordButton.setBackgroundColor(resources.getColor(R.color.colorGray))
 
-        val recordData = readFileAsTextUsingInputStream(mOutputFile)
+        val recordData = convertToBase64(mOutputFile)
         val date = Calendar.getInstance().time
         val formatter = SimpleDateFormat.getDateTimeInstance()
         val formDate = formatter.format(date)
@@ -110,8 +113,11 @@ class RecordActivity : AppCompatActivity() {
             .show()
     }
 
-    private fun readFileAsTextUsingInputStream(fileName: String) =
-        File(fileName).inputStream().readBytes().toString(Charsets.UTF_8)
+    //Кодируем аудиозапись в base64 строку для возможности сохранения в базе данных
+    private fun convertToBase64(path: String): String {
+        var file = File(path)
+        return Base64.encodeToString(file.readBytes(), Base64.NO_WRAP)
+    }
 
 
 }

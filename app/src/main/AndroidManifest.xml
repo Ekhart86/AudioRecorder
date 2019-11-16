@@ -24,15 +24,19 @@
         </activity>
         <activity
             android:name=".record.RecordActivity"
+            android:parentActivityName=".MainActivity"
             android:theme="@style/Theme.AppCompat.Light.DialogWhenLarge" />
         <activity
             android:name=".settings.SettingsActivity"
+            android:parentActivityName=".MainActivity"
             android:theme="@style/Theme.AppCompat.Light.DialogWhenLarge" />
         <activity
             android:name=".list.AudioListActivity"
+            android:parentActivityName=".MainActivity"
             android:theme="@style/Theme.AppCompat.Light.DialogWhenLarge" />
         <activity
             android:name=".play.PlayActivity"
+            android:parentActivityName=".list.AudioListActivity"
             android:theme="@style/Theme.AppCompat.Light.DialogWhenLarge" />
     </application>
 
