@@ -11,8 +11,8 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import ru.ekhart86.audiorecorder.sql.DBHelper
 import ru.ekhart86.audiorecorder.R
+import ru.ekhart86.audiorecorder.sql.DBHelper
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -119,6 +119,16 @@ class RecordActivity : AppCompatActivity() {
         return Base64.encodeToString(file.readBytes(), Base64.NO_WRAP)
     }
 
-
+    //Уничтожить рекордер если запись не была завершена кнопкой стоп
+    override fun onDestroy() {
+        if (myAudioRecorder != null) {
+            myAudioRecorder!!.stop()
+            myAudioRecorder!!.release()
+            myAudioRecorder = null
+            Toast.makeText(applicationContext, "Запись прервана без сохранения", Toast.LENGTH_LONG)
+                .show()
+        }
+        super.onDestroy()
+    }
 }
 

@@ -13,7 +13,7 @@
 
         <Button
             android:id="@+id/record_audio_button_id"
-            android:layout_width="350dp"
+            android:layout_width="300dp"
             android:layout_height="60dp"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
@@ -24,7 +24,7 @@
 
         <Button
             android:id="@+id/audio_list_button_id"
-            android:layout_width="350dp"
+            android:layout_width="300dp"
             android:layout_height="60dp"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
@@ -35,7 +35,7 @@
 
         <Button
             android:id="@+id/settings_button_id"
-            android:layout_width="350dp"
+            android:layout_width="300dp"
             android:layout_height="60dp"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
