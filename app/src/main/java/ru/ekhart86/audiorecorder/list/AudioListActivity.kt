@@ -6,7 +6,7 @@ import android.util.Log
 import android.widget.AdapterView
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
-import ru.ekhart86.audiorecord.sql.DBHelper
+import ru.ekhart86.audiorecorder.sql.DBHelper
 import ru.ekhart86.audiorecorder.R
 import ru.ekhart86.audiorecorder.play.PlayActivity
 import java.util.*
@@ -68,9 +68,8 @@ class AudioListActivity : AppCompatActivity() {
             Log.d("mLog", "0 rows")
 
         cursor.close()
-
-
         dbHelper.close()
+
         return list
     }
 

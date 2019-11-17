@@ -11,7 +11,7 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import ru.ekhart86.audiorecord.sql.DBHelper
+import ru.ekhart86.audiorecorder.sql.DBHelper
 import ru.ekhart86.audiorecorder.R
 import java.io.File
 import java.text.SimpleDateFormat

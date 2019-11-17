@@ -1,4 +1,4 @@
-package ru.ekhart86.audiorecord.sql
+package ru.ekhart86.audiorecorder.sql
 
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
@@ -30,6 +30,7 @@ class DBHelper(context: Context) :
         db.execSQL("drop table if exists $TABLE_RECORDS")
         onCreate(db)
     }
+
 
 
 }
