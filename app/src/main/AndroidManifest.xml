@@ -15,7 +15,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
-            android:theme="@style/Theme.AppCompat.Light.DialogWhenLarge">
+            android:theme="@style/Base.Theme.MaterialComponents">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,19 +25,19 @@
         <activity
             android:name=".record.RecordActivity"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/Theme.AppCompat.Light.DialogWhenLarge" />
+            android:theme="@style/Base.Theme.MaterialComponents" />
         <activity
             android:name=".settings.SettingsActivity"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/Theme.AppCompat.Light.DialogWhenLarge" />
-        <activity
-            android:name=".list.AudioListActivity"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/Theme.AppCompat.Light.DialogWhenLarge" />
+            android:theme="@style/Base.Theme.MaterialComponents" />
         <activity
             android:name=".play.PlayActivity"
-            android:parentActivityName=".list.AudioListActivity"
-            android:theme="@style/Theme.AppCompat.Light.DialogWhenLarge" />
+            android:parentActivityName=".list.ListRecordActivity"
+            android:theme="@style/Base.Theme.MaterialComponents" />
+        <activity
+            android:name=".list.ListRecordActivity"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/Base.Theme.MaterialComponents" />
     </application>
 
 </manifest>

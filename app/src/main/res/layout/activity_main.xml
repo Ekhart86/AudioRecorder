@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fillViewport="false"
     tools:context=".MainActivity">
 
@@ -11,8 +12,9 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/record_audio_button_id"
+            app:cornerRadius="16dp"
             android:layout_width="300dp"
             android:layout_height="60dp"
             android:layout_gravity="center"
@@ -22,8 +24,9 @@
             android:text="@string/record_audio_button"
             android:textColor="@color/colorWhite" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/audio_list_button_id"
+            app:cornerRadius="16dp"
             android:layout_width="300dp"
             android:layout_height="60dp"
             android:layout_gravity="center"
@@ -33,7 +36,8 @@
             android:text="@string/audio_list_button"
             android:textColor="@color/colorWhite" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
+            app:cornerRadius="16dp"
             android:id="@+id/settings_button_id"
             android:layout_width="300dp"
             android:layout_height="60dp"

@@ -8,7 +8,6 @@
         android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorWhite"
         android:gravity="center">
 
         <TextView
@@ -17,21 +16,20 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:text="@string/date"
-            android:textColor="#000"
+            android:textColor="@color/colorWhite"
             android:textSize="20sp" />
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorWhite"
         android:gravity="center">
 
         <TextView
             android:id="@+id/record_date_detail_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#000"
+            android:textColor="@color/colorWhite"
             android:textSize="20sp" />
     </RelativeLayout>
 

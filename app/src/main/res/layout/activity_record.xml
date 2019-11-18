@@ -2,26 +2,27 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/start_record_button_id"
-        android:layout_width="350dp"
+        app:cornerRadius="16dp"
+        android:layout_width="100dp"
         android:layout_height="60dp"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
-        android:background="@color/colorBlue"
         android:onClick="clickStartRecordButton"
         android:text="@string/start_record_button"
         android:textColor="@color/colorWhite" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/stop_record_button_id"
-        android:layout_width="350dp"
+        app:cornerRadius="16dp"
+        android:layout_width="100dp"
         android:layout_height="60dp"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
-        android:background="@color/colorBlue"
         android:onClick="clickStopRecordButton"
         android:text="@string/stop_record_button"
         android:textColor="@color/colorWhite" />

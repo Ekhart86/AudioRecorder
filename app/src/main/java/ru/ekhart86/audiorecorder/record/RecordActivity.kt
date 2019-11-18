@@ -11,6 +11,7 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import com.google.android.material.button.MaterialButton
 import ru.ekhart86.audiorecorder.R
 import ru.ekhart86.audiorecorder.sql.DBHelper
 import java.io.File
@@ -26,8 +27,8 @@ class RecordActivity : AppCompatActivity() {
     private var permissionToRecordAccepted = false
     private var permissions: Array<String> = arrayOf(Manifest.permission.RECORD_AUDIO)
 
-    private lateinit var mStartRecordButton: Button
-    private lateinit var mStopRecordButton: Button
+    private lateinit var mStartRecordButton: MaterialButton
+    private lateinit var mStopRecordButton: MaterialButton
     private var myAudioRecorder: MediaRecorder? = null
     private lateinit var mOutputFile: String
     private lateinit var dbHelper: DBHelper
@@ -48,9 +49,7 @@ class RecordActivity : AppCompatActivity() {
         )
         mStartRecordButton = findViewById(R.id.start_record_button_id)
         mStopRecordButton = findViewById(R.id.stop_record_button_id)
-
         mStopRecordButton.isEnabled = false
-        mStopRecordButton.setBackgroundColor(resources.getColor(R.color.colorGray))
     }
 
     //Проверить есть ли разрешение от пользователя на запись аудио
@@ -80,8 +79,6 @@ class RecordActivity : AppCompatActivity() {
         myAudioRecorder!!.start()
         mStartRecordButton.isEnabled = false
         mStopRecordButton.isEnabled = true
-        mStartRecordButton.setBackgroundColor(resources.getColor(R.color.colorGray))
-        mStopRecordButton.setBackgroundColor(resources.getColor(R.color.colorBlue))
         Toast.makeText(applicationContext, "Запись началась", Toast.LENGTH_LONG).show()
     }
 
@@ -95,8 +92,6 @@ class RecordActivity : AppCompatActivity() {
         mStartRecordButton.isEnabled = true
         mStopRecordButton.isEnabled = false
 
-        mStartRecordButton.setBackgroundColor(resources.getColor(R.color.colorBlue))
-        mStopRecordButton.setBackgroundColor(resources.getColor(R.color.colorGray))
 
         val recordData = convertToBase64(mOutputFile)
         val date = Calendar.getInstance().time
