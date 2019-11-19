@@ -3,6 +3,7 @@ package ru.ekhart86.audiorecorder
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.button.MaterialButton
 import ru.ekhart86.audiorecorder.list.ListRecordActivity
@@ -19,6 +20,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        //Разместить заголовок главной страницы по центру
+        val actionBar = supportActionBar
+        actionBar!!.displayOptions = ActionBar.DISPLAY_SHOW_CUSTOM
+        actionBar.setCustomView(R.layout.app_bar)
         mCreateNewButton = findViewById(R.id.record_audio_button_id)
         mListAudioButton = findViewById(R.id.audio_list_button_id)
         mSettingsButton = findViewById(R.id.settings_button_id)

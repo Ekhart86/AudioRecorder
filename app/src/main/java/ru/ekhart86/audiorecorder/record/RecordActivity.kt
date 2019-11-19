@@ -89,10 +89,6 @@ class RecordActivity : AppCompatActivity() {
         myAudioRecorder!!.release()
         //Уничтожаем обьект рекордера после каждой записи
         myAudioRecorder = null
-        mStartRecordButton.isEnabled = true
-        mStopRecordButton.isEnabled = false
-
-
         val recordData = convertToBase64(mOutputFile)
         val date = Calendar.getInstance().time
         val formatter = SimpleDateFormat.getDateTimeInstance()
@@ -104,8 +100,9 @@ class RecordActivity : AppCompatActivity() {
         contentValues.put(DBHelper.KEY_DATE, formDate)
         database.insert(DBHelper.TABLE_RECORDS, null, contentValues)
         dbHelper.close()
-        Toast.makeText(applicationContext, "Запись успешно завершена", Toast.LENGTH_LONG)
-            .show()
+        mStartRecordButton.isEnabled = true
+        mStopRecordButton.isEnabled = false
+        Toast.makeText(applicationContext, "Запись успешно завершена", Toast.LENGTH_LONG).show()
     }
 
     //Кодируем аудиозапись в base64 строку для возможности сохранения в базе данных
@@ -120,8 +117,7 @@ class RecordActivity : AppCompatActivity() {
             myAudioRecorder!!.stop()
             myAudioRecorder!!.release()
             myAudioRecorder = null
-            Toast.makeText(applicationContext, "Запись прервана без сохранения", Toast.LENGTH_LONG)
-                .show()
+            Toast.makeText(applicationContext, "Запись прервана без сохранения", Toast.LENGTH_LONG).show()
         }
         super.onDestroy()
     }
