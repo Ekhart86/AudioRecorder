@@ -1,6 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/soundInputText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="10dp"
+        android:text="@string/input_sound"
+        android:textColor="@color/colorWhite"
+        android:textSize="16sp" />
+
+    <RadioGroup
+        android:id="@+id/soundInputGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_marginStart="10dp"
+        android:checkedButton="@id/microphone"
+        android:orientation="vertical">
+
+        <RadioButton
+            android:id="@+id/microphone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/microphone" />
+
+        <RadioButton
+            android:id="@+id/bluetooth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/bluetooth" />
+
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/samplingFrequency"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:text="@string/frequency"
+        android:textColor="@color/colorWhite"
+        android:textSize="16sp" />
+
+    <RadioGroup
+        android:id="@+id/frecuencyQualityGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:checkedButton="@id/frequencyMedium"
+        android:orientation="vertical">
+
+        <RadioButton
+            android:id="@+id/frequencyMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Обычное качество" />
+
+        <RadioButton
+            android:id="@+id/highFrequency"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Высокое качество" />
+
+    </RadioGroup>
+
 
 </LinearLayout>

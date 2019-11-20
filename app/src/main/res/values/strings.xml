@@ -8,4 +8,8 @@
     <string name="play_button">Воспроизвести</string>
     <string name="remove_button">Удалить</string>
     <string name="date">Дата записи:</string>
+    <string name="frequency">Частота дискретизации:</string>
+    <string name="input_sound">Источник звука:</string>
+    <string name="microphone">Микрофон</string>
+    <string name="bluetooth">Блютуз</string>
 </resources>
