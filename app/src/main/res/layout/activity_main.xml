@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fillViewport="false"
     tools:context=".MainActivity">
 
@@ -14,38 +14,35 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/record_audio_button_id"
-            app:cornerRadius="16dp"
             android:layout_width="300dp"
             android:layout_height="60dp"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:background="@color/colorBlue"
             android:onClick="clickCreateNewButton"
             android:text="@string/record_audio_button"
-            android:textColor="@color/colorWhite" />
+            android:textColor="@color/colorWhite"
+            app:cornerRadius="16dp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/audio_list_button_id"
-            app:cornerRadius="16dp"
             android:layout_width="300dp"
             android:layout_height="60dp"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:background="@color/colorBlue"
             android:onClick="clickListAudioButton"
             android:text="@string/audio_list_button"
-            android:textColor="@color/colorWhite" />
+            android:textColor="@color/colorWhite"
+            app:cornerRadius="16dp" />
 
         <com.google.android.material.button.MaterialButton
-            app:cornerRadius="16dp"
             android:id="@+id/settings_button_id"
             android:layout_width="300dp"
             android:layout_height="60dp"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:background="@color/colorBlue"
             android:onClick="clickSettingsButton"
             android:text="@string/settings_button"
-            android:textColor="@color/colorWhite" />
+            android:textColor="@color/colorWhite"
+            app:cornerRadius="16dp" />
     </LinearLayout>
 </LinearLayout>

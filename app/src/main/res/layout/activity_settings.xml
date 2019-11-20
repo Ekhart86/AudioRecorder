@@ -8,8 +8,8 @@
         android:id="@+id/soundInputText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
         android:layout_marginStart="10dp"
+        android:layout_marginTop="30dp"
         android:text="@string/input_sound"
         android:textColor="@color/colorWhite"
         android:textSize="16sp" />
@@ -18,8 +18,8 @@
         android:id="@+id/soundInputGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
         android:layout_marginStart="10dp"
+        android:layout_marginBottom="20dp"
         android:checkedButton="@id/microphone"
         android:orientation="vertical">
 
@@ -27,12 +27,14 @@
             android:id="@+id/microphone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="clickMicrophoneButton"
             android:text="@string/microphone" />
 
         <RadioButton
             android:id="@+id/bluetooth"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="clickBluetoothButton"
             android:text="@string/bluetooth" />
 
     </RadioGroup>
@@ -58,13 +60,15 @@
             android:id="@+id/frequencyMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Обычное качество" />
+            android:onClick="clickMediumSamplingButton"
+            android:text="@string/medium_frequency" />
 
         <RadioButton
             android:id="@+id/highFrequency"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Высокое качество" />
+            android:onClick="clickHighSamplingButton"
+            android:text="@string/high_frecuency" />
 
     </RadioGroup>
 

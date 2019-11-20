@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -39,27 +40,29 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/play_button_id"
-            android:layout_width="350dp"
+            android:layout_width="300dp"
             android:layout_height="60dp"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:background="@color/colorBlue"
             android:onClick="clickPlayButton"
             android:text="@string/play_button"
-            android:textColor="@color/colorWhite" />
+            android:textColor="@color/colorWhite"
+            app:cornerRadius="16dp" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/remove_button_id"
-            android:layout_width="350dp"
+            android:layout_width="300dp"
             android:layout_height="60dp"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:background="@color/colorBlue"
             android:onClick="clickRemoveButton"
             android:text="@string/remove_button"
-            android:textColor="@color/colorWhite" />
+            android:textColor="@color/colorWhite"
+            app:cornerRadius="16dp" />
 
     </LinearLayout>
 </LinearLayout>

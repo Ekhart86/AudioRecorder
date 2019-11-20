@@ -12,4 +12,6 @@
     <string name="input_sound">Источник звука:</string>
     <string name="microphone">Микрофон</string>
     <string name="bluetooth">Блютуз</string>
+    <string name="medium_frequency">Обычное качество</string>
+    <string name="high_frecuency">Высокое качество</string>
 </resources>

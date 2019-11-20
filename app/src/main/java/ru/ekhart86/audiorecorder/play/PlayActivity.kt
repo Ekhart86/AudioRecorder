@@ -9,17 +9,19 @@ import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.button.MaterialButton
 import ru.ekhart86.audiorecorder.MainActivity
 import ru.ekhart86.audiorecorder.R
 import ru.ekhart86.audiorecorder.sql.DBHelper
 import java.io.File
 import java.io.IOException
 
-private const val LOG_TAG = "AudioPlay"
+private const val PLAY_TAG = "AudioPlay"
 
 class PlayActivity : AppCompatActivity() {
 
     private lateinit var mDate: TextView
+    private lateinit var mPlay: MaterialButton
     private var mAudioRecorder: MediaPlayer? = null
     private var recordValue: String? = null
     private var currentId: Int? = null
@@ -38,13 +40,13 @@ class PlayActivity : AppCompatActivity() {
         val dateString = intent.getStringExtra("date")
         mDate.text = dateString
         recordValue = intent.getStringExtra("value")
+        mPlay = findViewById(R.id.play_button_id)
 
     }
 
 
     fun clickPlayButton(v: View) {
         var pathWrite = "${externalCacheDir!!.absolutePath}/audioPlay.3gp"
-        println()
         File(pathWrite).writeBytes(decodeBase64(recordValue))
         mAudioRecorder = MediaPlayer()
 
@@ -53,7 +55,7 @@ class PlayActivity : AppCompatActivity() {
             mAudioRecorder!!.prepare()
             mAudioRecorder!!.start()
         } catch (e: IOException) {
-            Log.e(LOG_TAG, "Ошибка воспроизведения аудиозаписи.")
+            Log.e(PLAY_TAG, "Ошибка воспроизведения аудиозаписи.")
         }
     }
 
