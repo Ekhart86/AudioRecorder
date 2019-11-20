@@ -14,4 +14,5 @@
     <string name="bluetooth">Блютуз</string>
     <string name="medium_frequency">Обычное качество</string>
     <string name="high_frecuency">Высокое качество</string>
+    <string name="check_bluetooth">Проверка Bluetooth</string>
 </resources>

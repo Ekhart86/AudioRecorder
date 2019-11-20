@@ -148,5 +148,8 @@ class RecordActivity : AppCompatActivity() {
         }
         super.onDestroy()
     }
+
+
+
 }
 

@@ -6,6 +6,7 @@ import android.view.View
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.button.MaterialButton
+import ru.ekhart86.audiorecorder.bluetooth.BluetoothRecordActivity
 import ru.ekhart86.audiorecorder.list.ListRecordActivity
 import ru.ekhart86.audiorecorder.record.RecordActivity
 import ru.ekhart86.audiorecorder.settings.SettingsActivity
@@ -44,6 +45,11 @@ class MainActivity : AppCompatActivity() {
 
     fun clickSettingsButton(v: View) {
         val intent = Intent(this@MainActivity, SettingsActivity::class.java)
+        startActivity(intent)
+    }
+
+    fun clickBluetoothButton(view: View) {
+        val intent = Intent(this@MainActivity, BluetoothRecordActivity::class.java)
         startActivity(intent)
     }
 }
