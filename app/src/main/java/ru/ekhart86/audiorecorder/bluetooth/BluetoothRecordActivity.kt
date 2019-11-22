@@ -316,7 +316,7 @@ class BluetoothRecordActivity : AppCompatActivity() {
 
     //Метод декодирует pcm файл в mp4
     private fun decodeToMp4(inputPath: String?, outputPath: String?) {
-        val pcmEncoder = PCMEncoder(16000, currentFrecuencySampling, 1)
+        val pcmEncoder = PCMEncoder(384000, currentFrecuencySampling, 1)
         pcmEncoder.setOutputPath(outputPath)
         pcmEncoder.prepare()
         val initialFile = File(inputPath!!)
