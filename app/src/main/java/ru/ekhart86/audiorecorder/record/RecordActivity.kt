@@ -56,7 +56,7 @@ class RecordActivity : AppCompatActivity() {
         val actionBar = supportActionBar
         actionBar!!.title = "Новая запись"
         //Путь до папки с кэшем
-        mOutputFile = "${externalCacheDir!!.absolutePath}/audioRecord.3gp"
+        mOutputFile = "${externalCacheDir!!.absolutePath}/audioRecord.mp4"
 
         ActivityCompat.requestPermissions(
             this, permissions,

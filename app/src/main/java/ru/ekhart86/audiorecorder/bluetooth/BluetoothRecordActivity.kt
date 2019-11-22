@@ -13,17 +13,18 @@ import android.media.MediaRecorder
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.google.android.material.button.MaterialButton
 import ru.ekhart86.audiorecorder.R
-import java.io.File
-import java.io.FileOutputStream
-import java.io.IOException
+import ru.ekhart86.audiorecorder.sql.DBHelper
+import java.io.*
 import java.nio.ByteBuffer
 import java.util.concurrent.atomic.AtomicBoolean
 
 private const val REQUEST_RECORD_AUDIO_PERMISSION = 200
+
 
 class BluetoothRecordActivity : AppCompatActivity() {
     /**
@@ -88,7 +89,7 @@ class BluetoothRecordActivity : AppCompatActivity() {
     private var startButton: MaterialButton? = null
     private var stopButton: MaterialButton? = null
     private var bluetoothButton: MaterialButton? = null
-
+    private lateinit var dbHelper: DBHelper
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -142,9 +143,7 @@ class BluetoothRecordActivity : AppCompatActivity() {
         startButton!!.isEnabled = calculateStartRecordButtonState()
         stopButton!!.isEnabled = calculateStopRecordButtonState()
         registerReceiver(
-            bluetoothStateReceiver, IntentFilter(
-                AudioManager.ACTION_SCO_AUDIO_STATE_UPDATED
-            )
+            bluetoothStateReceiver, IntentFilter(AudioManager.ACTION_SCO_AUDIO_STATE_UPDATED)
         )
     }
 
@@ -155,8 +154,7 @@ class BluetoothRecordActivity : AppCompatActivity() {
     }
 
     private fun startRecording() {
-        // В зависимости от устройства может потребоваться изменить AudioSource, например, по умолчанию
-        // или VOICE_COMMUNICATION
+        // В зависимости от устройства может потребоваться изменить AudioSource, DEFAULT либо VOICE_COMMUNICATION
         recorder = AudioRecord(
             MediaRecorder.AudioSource.VOICE_COMMUNICATION,
             SAMPLING_RATE_IN_HZ,
@@ -172,6 +170,7 @@ class BluetoothRecordActivity : AppCompatActivity() {
         bluetoothButton!!.isEnabled = calculateBluetoothButtonState()
         startButton!!.isEnabled = calculateStartRecordButtonState()
         stopButton!!.isEnabled = calculateStopRecordButtonState()
+        Toast.makeText(applicationContext, "Запись началась", Toast.LENGTH_LONG).show()
     }
 
     private fun stopRecording() {
@@ -186,13 +185,27 @@ class BluetoothRecordActivity : AppCompatActivity() {
         bluetoothButton!!.isEnabled = calculateBluetoothButtonState()
         startButton!!.isEnabled = calculateStartRecordButtonState()
         stopButton!!.isEnabled = calculateStopRecordButtonState()
+        //Конвертируем полученный pcm файл в mp4 формат
+        decodeToMp4(
+            "${externalCacheDir!!.absolutePath}/audioRecordBluetooth.pcm",
+            "${externalCacheDir!!.absolutePath}/audioRecordBluetooth.mp4"
+        )
+        //Записываем в базу
+        DBHelper.addRecordToDB(this, "${externalCacheDir!!.absolutePath}/audioRecordBluetooth.mp4")
+
     }
+
 
     private fun activateBluetoothSco() {
         if (!audioManager!!.isBluetoothScoAvailableOffCall) {
             Log.e(
                 TAG, "SCO не доступен, запись невозможна"
             )
+            Toast.makeText(
+                applicationContext,
+                "SCO не доступен, запись невозможна",
+                Toast.LENGTH_LONG
+            ).show()
             return
         }
         if (!audioManager!!.isBluetoothScoOn) {
@@ -290,4 +303,18 @@ class BluetoothRecordActivity : AppCompatActivity() {
         ) * BUFFER_SIZE_FACTOR
     }
 
+    //Метод декодирует pcm файл в mp4
+    private fun decodeToMp4(inputPath: String?, outputPath: String?) {
+        val pcmEncoder = PCMEncoder(16000, 44100, 1)
+        pcmEncoder.setOutputPath(outputPath)
+        pcmEncoder.prepare()
+        val initialFile = File(inputPath!!)
+        try {
+            val targetStream: InputStream = FileInputStream(initialFile)
+            pcmEncoder.encode(targetStream, 44100)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        pcmEncoder.stop()
+    }
 }

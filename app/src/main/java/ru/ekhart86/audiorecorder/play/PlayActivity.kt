@@ -22,7 +22,7 @@ class PlayActivity : AppCompatActivity() {
 
     private lateinit var mDate: TextView
     private lateinit var mPlay: MaterialButton
-    private var mAudioRecorder: MediaPlayer? = null
+    private var mediaPlayer: MediaPlayer? = null
     private var recordValue: String? = null
     private var currentId: Int? = null
     private lateinit var dbHelper: DBHelper
@@ -46,14 +46,14 @@ class PlayActivity : AppCompatActivity() {
 
 
     fun clickPlayButton(v: View) {
-        var pathWrite = "${externalCacheDir!!.absolutePath}/audioPlay.3gp"
+        var pathWrite = "${externalCacheDir!!.absolutePath}/audioPlay.mp4"
         File(pathWrite).writeBytes(decodeBase64(recordValue))
-        mAudioRecorder = MediaPlayer()
+        mediaPlayer = MediaPlayer()
 
         try {
-            mAudioRecorder!!.setDataSource(pathWrite)
-            mAudioRecorder!!.prepare()
-            mAudioRecorder!!.start()
+            mediaPlayer!!.setDataSource(pathWrite)
+            mediaPlayer!!.prepare()
+            mediaPlayer!!.start()
         } catch (e: IOException) {
             Log.e(PLAY_TAG, "Ошибка воспроизведения аудиозаписи.")
         }
