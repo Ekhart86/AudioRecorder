@@ -19,7 +19,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:onClick="clickCreateNewButton"
-            android:text="@string/record_audio_button"
+            android:text="@string/new_record"
             android:textColor="@color/colorWhite"
             app:cornerRadius="16dp" />
 
