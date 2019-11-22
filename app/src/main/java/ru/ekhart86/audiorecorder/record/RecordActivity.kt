@@ -1,7 +1,6 @@
 package ru.ekhart86.audiorecorder.record
 
 import android.Manifest
-import android.content.ContentValues
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.media.MediaRecorder
@@ -16,8 +15,6 @@ import com.google.android.material.button.MaterialButton
 import ru.ekhart86.audiorecorder.R
 import ru.ekhart86.audiorecorder.sql.DBHelper
 import java.io.File
-import java.text.SimpleDateFormat
-import java.util.*
 
 
 private const val REQUEST_RECORD_AUDIO_PERMISSION = 200
@@ -28,7 +25,7 @@ class RecordActivity : AppCompatActivity() {
     val SELECTED_AUDIO_INPUT = "selectedAudioInput"
     val SELECTED__FRECUENCY = "selectedFrecuencySampling"
     lateinit var currentAudioInput: String
-    lateinit var currentFrecuencySampling: String
+    var currentFrecuencySampling: Int = 22050
     lateinit var preferences: SharedPreferences
 
     private var permissionToRecordAccepted = false
@@ -38,7 +35,6 @@ class RecordActivity : AppCompatActivity() {
     private lateinit var mStopRecordButton: MaterialButton
     private var myAudioRecorder: MediaRecorder? = null
     private lateinit var mOutputFile: String
-    private lateinit var dbHelper: DBHelper
     private lateinit var audioInputText: TextView
     private lateinit var frecuencySamplingText: TextView
 
@@ -62,14 +58,14 @@ class RecordActivity : AppCompatActivity() {
             this, permissions,
             REQUEST_RECORD_AUDIO_PERMISSION
         )
-        //Получаем записанные в SharedPreferences радиобатоны, если ничего нет, то будут выбраны микрофон и среднее качество
+        //Получаем записанные в SharedPreferences радиобатоны, если ничего нет, то будут выбраны микрофон и 22050
         currentAudioInput =
             preferences.getString(SELECTED_AUDIO_INPUT, getString(R.string.microphone)).toString()
         currentFrecuencySampling =
-            preferences.getString(SELECTED__FRECUENCY, getString(R.string.medium_frequency))
-                .toString()
+            preferences.getInt(SELECTED__FRECUENCY, 22050)
+
         audioInputText.text = currentAudioInput
-        frecuencySamplingText.text = currentFrecuencySampling
+        frecuencySamplingText.text = currentFrecuencySampling.toString()
         mStopRecordButton.isEnabled = false
     }
 
@@ -95,11 +91,9 @@ class RecordActivity : AppCompatActivity() {
         myAudioRecorder!!.setAudioSource(MediaRecorder.AudioSource.MIC)
         myAudioRecorder!!.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
         myAudioRecorder!!.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB)
-        //Устанавливаем высокое качество частоты дискретизации если оно выбрано в настройках
-        if (currentFrecuencySampling == getString(R.string.high_frecuency)) {
-            myAudioRecorder!!.setAudioEncodingBitRate(384000)
-            myAudioRecorder!!.setAudioSamplingRate(44100)
-        }
+        //Устанавливаем частоту в зависимости от частоты выбранной в настройках
+        myAudioRecorder!!.setAudioSamplingRate(currentFrecuencySampling)
+        myAudioRecorder!!.setAudioEncodingBitRate(384000)
         myAudioRecorder!!.setOutputFile(mOutputFile)
         myAudioRecorder!!.prepare()
         myAudioRecorder!!.start()
@@ -110,22 +104,11 @@ class RecordActivity : AppCompatActivity() {
 
     //Остановить запись и сохранить результат в базу данных
     fun clickStopRecordButton(v: View) {
-        dbHelper = DBHelper(this)
         myAudioRecorder!!.stop()
         myAudioRecorder!!.release()
         //Уничтожаем обьект рекордера после каждой записи
         myAudioRecorder = null
-        val recordData = convertToBase64(mOutputFile)
-        val date = Calendar.getInstance().time
-        val formatter = SimpleDateFormat.getDateTimeInstance()
-        val formDate = formatter.format(date)
-
-        val database = dbHelper.writableDatabase
-        val contentValues = ContentValues()
-        contentValues.put(DBHelper.KEY_VALUE, recordData)
-        contentValues.put(DBHelper.KEY_DATE, formDate)
-        database.insert(DBHelper.TABLE_RECORDS, null, contentValues)
-        dbHelper.close()
+        DBHelper.addRecordToDB(this, mOutputFile)
         mStartRecordButton.isEnabled = true
         mStopRecordButton.isEnabled = false
         Toast.makeText(applicationContext, "Запись успешно завершена", Toast.LENGTH_LONG).show()
@@ -148,7 +131,6 @@ class RecordActivity : AppCompatActivity() {
         }
         super.onDestroy()
     }
-
 
 
 }

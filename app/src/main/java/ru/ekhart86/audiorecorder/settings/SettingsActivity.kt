@@ -23,6 +23,7 @@ class SettingsActivity : AppCompatActivity() {
 
     private lateinit var microphoneButton: RadioButton
     private lateinit var bluetoothButton: RadioButton
+    private lateinit var lowQualityFrequencyButton: RadioButton
     private lateinit var mediumQualityFrequencyButton: RadioButton
     private lateinit var highQualityFrequencyButton: RadioButton
 
@@ -44,6 +45,7 @@ class SettingsActivity : AppCompatActivity() {
 
         microphoneButton = findViewById(R.id.microphone)
         bluetoothButton = findViewById(R.id.bluetooth)
+        lowQualityFrequencyButton = findViewById(R.id.lowFrequency)
         mediumQualityFrequencyButton = findViewById(R.id.frequencyMedium)
         highQualityFrequencyButton = findViewById(R.id.highFrequency)
         setSoundInputButton()
@@ -72,16 +74,25 @@ class SettingsActivity : AppCompatActivity() {
         editor.apply()
     }
 
+    fun clickLowSamplingButton(view: View) {
+        val editor = pref.edit()
+        val sampling : Int = lowQualityFrequencyButton.text.toString().toInt()
+        editor.putInt(SELECTED__FRECUENCY, sampling)
+        editor.apply()
+
+    }
 
     fun clickMediumSamplingButton(view: View) {
         val editor = pref.edit()
-        editor.putString(SELECTED__FRECUENCY, mediumQualityFrequencyButton.text.toString())
+        val sampling : Int = mediumQualityFrequencyButton.text.toString().toInt()
+        editor.putInt(SELECTED__FRECUENCY, sampling)
         editor.apply()
     }
 
     fun clickHighSamplingButton(view: View) {
         val editor = pref.edit()
-        editor.putString(SELECTED__FRECUENCY, highQualityFrequencyButton.text.toString())
+        val sampling : Int = highQualityFrequencyButton.text.toString().toInt()
+        editor.putInt(SELECTED__FRECUENCY, sampling)
         editor.apply()
     }
 
@@ -113,4 +124,5 @@ class SettingsActivity : AppCompatActivity() {
             Log.i(SETTINGS_LOG_TAG, "Нет записей о выбранных радиобатоннах частоты дискретизации")
         }
     }
+
 }

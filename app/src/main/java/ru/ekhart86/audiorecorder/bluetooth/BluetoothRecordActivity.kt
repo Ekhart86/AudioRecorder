@@ -1,10 +1,7 @@
 package ru.ekhart86.audiorecorder.bluetooth
 
 import android.Manifest
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
+import android.content.*
 import android.content.pm.PackageManager
 import android.media.AudioFormat
 import android.media.AudioManager
@@ -13,6 +10,7 @@ import android.media.MediaRecorder
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -27,12 +25,33 @@ private const val REQUEST_RECORD_AUDIO_PERMISSION = 200
 
 
 class BluetoothRecordActivity : AppCompatActivity() {
-    /**
-     * Signals whether a recording is in progress (true) or not (false).
-     */
+
+    private val APP_PREFERENCES = "settings"
+    private val SELECTED_AUDIO_INPUT = "selectedAudioInput"
+    private val SELECTED__FRECUENCY = "selectedFrecuencySampling"
+    private lateinit var currentAudioInput: String
+    private var currentFrecuencySampling: Int = 22050
+    private lateinit var preferences: SharedPreferences
+
+    private val TAG = BluetoothRecordActivity::class.java.canonicalName
+    private val CHANNEL_CONFIG: Int = AudioFormat.CHANNEL_IN_MONO
+    private val AUDIO_FORMAT: Int = AudioFormat.ENCODING_PCM_16BIT
+    private val BUFFER_SIZE_FACTOR = 2
+
+
     private var permissionToRecordAccepted = false
     private var permissions: Array<String> = arrayOf(Manifest.permission.RECORD_AUDIO)
     private val recordingInProgress: AtomicBoolean = AtomicBoolean(false)
+    private var recorder: AudioRecord? = null
+    private var audioManager: AudioManager? = null
+    private var recordingThread: Thread? = null
+    private var startButton: MaterialButton? = null
+    private var stopButton: MaterialButton? = null
+    private var bluetoothButton: MaterialButton? = null
+    private lateinit var audioInputText: TextView
+    private lateinit var frecuencySamplingText: TextView
+
+
     private val bluetoothStateReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         private var bluetoothState = BluetoothState.UNAVAILABLE
 
@@ -83,21 +102,26 @@ class BluetoothRecordActivity : AppCompatActivity() {
             bluetoothStateChanged(state)
         }
     }
-    private var recorder: AudioRecord? = null
-    private var audioManager: AudioManager? = null
-    private var recordingThread: Thread? = null
-    private var startButton: MaterialButton? = null
-    private var stopButton: MaterialButton? = null
-    private var bluetoothButton: MaterialButton? = null
-    private lateinit var dbHelper: DBHelper
+
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.bluetooth)
+        preferences = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE)
         startButton = findViewById<View>(R.id.btnStart) as MaterialButton
         stopButton = findViewById<View>(R.id.btnStop) as MaterialButton
         bluetoothButton = findViewById<View>(R.id.btnBluetooth) as MaterialButton
         audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
+        audioInputText = findViewById(R.id.inputSoundBluetooth)
+        frecuencySamplingText = findViewById(R.id.samplingFrequencyBluetooth)
+        //Получаем записанные в SharedPreferences радиобатоны, если ничего нет, то будут выбраны микрофон и 22050
+        currentAudioInput =
+            preferences.getString(SELECTED_AUDIO_INPUT, getString(R.string.microphone)).toString()
+        //Получаем частоту дискретизации, если не записана никакая то используем 22050
+        currentFrecuencySampling =
+            preferences.getInt(SELECTED__FRECUENCY, 22050)
+        audioInputText.text = currentAudioInput
+        frecuencySamplingText.text = currentFrecuencySampling.toString()
 
         ActivityCompat.requestPermissions(
             this, permissions,
@@ -153,14 +177,24 @@ class BluetoothRecordActivity : AppCompatActivity() {
         unregisterReceiver(bluetoothStateReceiver)
     }
 
+    private  fun getBufferSize() : Int {
+        return AudioRecord.getMinBufferSize(
+            currentFrecuencySampling,
+            CHANNEL_CONFIG,
+            AUDIO_FORMAT
+        ) * BUFFER_SIZE_FACTOR
+    }
+
+
     private fun startRecording() {
         // В зависимости от устройства может потребоваться изменить AudioSource, DEFAULT либо VOICE_COMMUNICATION
+
         recorder = AudioRecord(
             MediaRecorder.AudioSource.VOICE_COMMUNICATION,
-            SAMPLING_RATE_IN_HZ,
+            currentFrecuencySampling,
             CHANNEL_CONFIG,
             AUDIO_FORMAT,
-            BUFFER_SIZE
+            getBufferSize()
         )
         recorder!!.startRecording()
         recordingInProgress.set(true)
@@ -240,11 +274,11 @@ class BluetoothRecordActivity : AppCompatActivity() {
             var path = "${externalCacheDir!!.absolutePath}/audioRecordBluetooth.pcm"
             println(path)
             val file = File(path)
-            val buffer: ByteBuffer = ByteBuffer.allocateDirect(BUFFER_SIZE)
+            val buffer: ByteBuffer = ByteBuffer.allocateDirect(getBufferSize())
             try {
                 FileOutputStream(file).use { outStream ->
                     while (recordingInProgress.get()) {
-                        val result = recorder!!.read(buffer, BUFFER_SIZE)
+                        val result = recorder!!.read(buffer, getBufferSize())
                         if (result < 0) {
                             throw RuntimeException(
                                 "Reading of audio buffer failed: " + getBufferReadFailureReason(
@@ -255,7 +289,7 @@ class BluetoothRecordActivity : AppCompatActivity() {
                         outStream.write(
                             buffer.array(),
                             0,
-                            BUFFER_SIZE
+                            getBufferSize()
                         )
                         buffer.clear()
                     }
@@ -280,38 +314,15 @@ class BluetoothRecordActivity : AppCompatActivity() {
         AVAILABLE, UNAVAILABLE
     }
 
-    companion object {
-        private val TAG = BluetoothRecordActivity::class.java.canonicalName
-        private const val SAMPLING_RATE_IN_HZ = 44100
-        private val CHANNEL_CONFIG: Int = AudioFormat.CHANNEL_IN_MONO
-        private val AUDIO_FORMAT: Int = AudioFormat.ENCODING_PCM_16BIT
-        /**
-        Фактор, на который умножается минимальный размер буфера. Чем больше фактор, тем меньше
-         * вероятность, что сэмплы будут отброшены, но будет использовано больше памяти. Минимальный буфер
-         * размер определяется [AudioRecord.getMinBufferSize] и зависит от
-         * настройки записи.
-         */
-        private const val BUFFER_SIZE_FACTOR = 2
-        /**
-         *
-        Размер буфера, в котором хранятся аудиоданные Android
-         */
-        private val BUFFER_SIZE = AudioRecord.getMinBufferSize(
-            SAMPLING_RATE_IN_HZ,
-            CHANNEL_CONFIG,
-            AUDIO_FORMAT
-        ) * BUFFER_SIZE_FACTOR
-    }
-
     //Метод декодирует pcm файл в mp4
     private fun decodeToMp4(inputPath: String?, outputPath: String?) {
-        val pcmEncoder = PCMEncoder(16000, 44100, 1)
+        val pcmEncoder = PCMEncoder(16000, currentFrecuencySampling, 1)
         pcmEncoder.setOutputPath(outputPath)
         pcmEncoder.prepare()
         val initialFile = File(inputPath!!)
         try {
             val targetStream: InputStream = FileInputStream(initialFile)
-            pcmEncoder.encode(targetStream, 44100)
+            pcmEncoder.encode(targetStream, currentFrecuencySampling)
         } catch (e: Exception) {
             e.printStackTrace()
         }

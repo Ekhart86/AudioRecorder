@@ -44,16 +44,5 @@
             android:text="@string/settings_button"
             android:textColor="@color/colorWhite"
             app:cornerRadius="16dp" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/bluetooth_button_id"
-            android:layout_width="300dp"
-            android:layout_height="60dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:onClick="clickBluetoothButton"
-            android:text="Блютуз запись"
-            android:textColor="@color/colorWhite"
-            app:cornerRadius="16dp" />
     </LinearLayout>
 </LinearLayout>

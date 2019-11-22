@@ -57,6 +57,13 @@
         android:orientation="vertical">
 
         <RadioButton
+            android:id="@+id/lowFrequency"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="clickLowSamplingButton"
+            android:text="@string/low_frecuency" />
+
+        <RadioButton
             android:id="@+id/frequencyMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -69,7 +76,6 @@
             android:layout_height="wrap_content"
             android:onClick="clickHighSamplingButton"
             android:text="@string/high_frecuency" />
-
     </RadioGroup>
 
 

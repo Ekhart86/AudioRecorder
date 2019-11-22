@@ -1,6 +1,7 @@
 package ru.ekhart86.audiorecorder
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.ActionBar
@@ -14,15 +15,20 @@ import ru.ekhart86.audiorecorder.settings.SettingsActivity
 
 class MainActivity : AppCompatActivity() {
 
+    lateinit var preferences: SharedPreferences
+    val APP_PREFERENCES = "settings"
+    val SELECTED_AUDIO_INPUT = "selectedAudioInput"
+    lateinit var currentAudioInput: String
+
     private lateinit var mCreateNewButton: MaterialButton
     private lateinit var mListAudioButton: MaterialButton
     private lateinit var mSettingsButton: MaterialButton
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        preferences = getSharedPreferences(APP_PREFERENCES, MODE_PRIVATE)
         //Разместить заголовок главной страницы по центру
         val actionBar = supportActionBar
         actionBar!!.displayOptions = ActionBar.DISPLAY_SHOW_CUSTOM
@@ -34,8 +40,16 @@ class MainActivity : AppCompatActivity() {
 
 
     fun clickCreateNewButton(v: View) {
-        val intent = Intent(this@MainActivity, RecordActivity::class.java)
-        startActivity(intent)
+        currentAudioInput =
+            preferences.getString(SELECTED_AUDIO_INPUT, getString(R.string.microphone)).toString()
+
+        if (currentAudioInput == getString(R.string.microphone)) {
+            val intent = Intent(this@MainActivity, RecordActivity::class.java)
+            startActivity(intent)
+        } else if (currentAudioInput == getString(R.string.bluetooth)) {
+            val intent = Intent(this@MainActivity, BluetoothRecordActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     fun clickListAudioButton(v: View) {
@@ -48,8 +62,4 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    fun clickBluetoothButton(view: View) {
-        val intent = Intent(this@MainActivity, BluetoothRecordActivity::class.java)
-        startActivity(intent)
-    }
 }
