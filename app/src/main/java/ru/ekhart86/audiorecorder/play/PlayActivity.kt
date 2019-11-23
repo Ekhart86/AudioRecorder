@@ -6,10 +6,10 @@ import android.os.Bundle
 import android.util.Base64
 import android.util.Log
 import android.view.View
+import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.material.button.MaterialButton
 import ru.ekhart86.audiorecorder.MainActivity
 import ru.ekhart86.audiorecorder.R
 import ru.ekhart86.audiorecorder.sql.DBHelper
@@ -22,17 +22,16 @@ private const val PLAY_TAG = "AudioPlay"
 class PlayActivity : AppCompatActivity() {
 
     private lateinit var mDate: TextView
-    private lateinit var mPlay: MaterialButton
+    private lateinit var mPlay: ImageButton
     private var mediaPlayer: MediaPlayer? = null
     private var currentId: Int? = null
-
+    private var pathWrite = ""
     private lateinit var dbHelper: DBHelper
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_play)
-
         //Добавляем заголовок
         val actionBar = supportActionBar
         currentId = intent.getIntExtra("id", 0)
@@ -41,13 +40,8 @@ class PlayActivity : AppCompatActivity() {
         val dateString = intent.getStringExtra("date")
         mDate.text = dateString
         mPlay = findViewById(R.id.play_button_id)
-
-
-    }
-
-
-    fun clickPlayButton(v: View) {
-        var pathWrite = "${externalCacheDir!!.absolutePath}/audioPlay.mp4"
+        //Путь куда запишется файл из базы
+        pathWrite = "${externalCacheDir!!.absolutePath}/audioPlay.mp4"
         File(pathWrite).writeBytes(
             decodeBase64(
                 DBHelper.getCurrentRecord(
@@ -56,8 +50,12 @@ class PlayActivity : AppCompatActivity() {
                 )!!.value
             )
         )
-        mediaPlayer = MediaPlayer()
 
+    }
+
+
+    fun clickPlayButton(v: View) {
+        mediaPlayer = MediaPlayer()
         try {
             mediaPlayer!!.setDataSource(pathWrite)
             mediaPlayer!!.prepare()
@@ -86,5 +84,7 @@ class PlayActivity : AppCompatActivity() {
         startActivity(intent)
         finish()
     }
+
+    fun clickStopPlayButton(view: View) {}
 
 }

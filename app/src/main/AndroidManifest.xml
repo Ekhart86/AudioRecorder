@@ -16,11 +16,10 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/Theme.MaterialComponents">
         <activity
             android:name=".MainActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Base.Theme.MaterialComponents">
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -30,28 +29,23 @@
         <activity
             android:name=".record.RecordActivity"
             android:screenOrientation="portrait"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/Base.Theme.MaterialComponents" />
+            android:parentActivityName=".MainActivity"/>
         <activity
             android:name=".settings.SettingsActivity"
             android:screenOrientation="portrait"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/Base.Theme.MaterialComponents" />
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".play.PlayActivity"
             android:screenOrientation="portrait"
-            android:parentActivityName=".list.ListRecordActivity"
-            android:theme="@style/Base.Theme.MaterialComponents" />
+            android:parentActivityName=".list.ListRecordActivity" />
         <activity
             android:name=".list.ListRecordActivity"
             android:screenOrientation="portrait"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/Base.Theme.MaterialComponents" />
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".bluetooth.BluetoothRecordActivity"
             android:screenOrientation="portrait"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/Base.Theme.MaterialComponents" />
+            android:parentActivityName=".MainActivity" />
     </application>
 
 </manifest>

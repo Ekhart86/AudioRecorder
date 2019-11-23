@@ -20,9 +20,9 @@ class MainActivity : AppCompatActivity() {
     val SELECTED_AUDIO_INPUT = "selectedAudioInput"
     lateinit var currentAudioInput: String
 
-    private lateinit var mCreateNewButton: MaterialButton
-    private lateinit var mListAudioButton: MaterialButton
-    private lateinit var mSettingsButton: MaterialButton
+    private lateinit var createNewButton: MaterialButton
+    private lateinit var listAudioButton: MaterialButton
+    private lateinit var settingsButton: MaterialButton
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,9 +33,9 @@ class MainActivity : AppCompatActivity() {
         val actionBar = supportActionBar
         actionBar!!.displayOptions = ActionBar.DISPLAY_SHOW_CUSTOM
         actionBar.setCustomView(R.layout.app_bar)
-        mCreateNewButton = findViewById(R.id.record_audio_button_id)
-        mListAudioButton = findViewById(R.id.audio_list_button_id)
-        mSettingsButton = findViewById(R.id.settings_button_id)
+        createNewButton = findViewById(R.id.record_audio_button_id)
+        listAudioButton = findViewById(R.id.audio_list_button_id)
+        settingsButton = findViewById(R.id.settings_button_id)
     }
 
 
