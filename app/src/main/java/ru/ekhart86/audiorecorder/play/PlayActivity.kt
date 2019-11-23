@@ -24,8 +24,8 @@ class PlayActivity : AppCompatActivity() {
     private lateinit var mDate: TextView
     private lateinit var mPlay: MaterialButton
     private var mediaPlayer: MediaPlayer? = null
-    private var recordValue: String? = null
     private var currentId: Int? = null
+
     private lateinit var dbHelper: DBHelper
 
 
@@ -40,8 +40,8 @@ class PlayActivity : AppCompatActivity() {
         mDate = findViewById(R.id.record_date_detail_id)
         val dateString = intent.getStringExtra("date")
         mDate.text = dateString
-//        recordValue = intent.getStringExtra("value")
         mPlay = findViewById(R.id.play_button_id)
+
 
     }
 

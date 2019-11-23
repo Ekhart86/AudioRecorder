@@ -7,8 +7,10 @@ import android.graphics.Color
 import android.media.MediaRecorder
 import android.os.Build
 import android.os.Bundle
+import android.os.SystemClock
 import android.view.Gravity
 import android.view.View
+import android.widget.Chronometer
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
@@ -41,7 +43,8 @@ class RecordActivity : AppCompatActivity() {
     private lateinit var audioInputText: TextView
     private lateinit var frecuencySamplingText: TextView
     private var isPressedpause: Boolean = false
-
+    private lateinit var chronometer: Chronometer
+    private var timeWhenStopped: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,6 +55,7 @@ class RecordActivity : AppCompatActivity() {
         mStartRecordButton = findViewById(R.id.start_record_button_id)
         mStopRecordButton = findViewById(R.id.stop_record_button_id)
         mPauseRecordButton = findViewById(R.id.pause_record_button_id)
+        chronometer = findViewById(R.id.view_timer)
 
         //Добавляем заголовок
         val actionBar = supportActionBar
@@ -105,6 +109,9 @@ class RecordActivity : AppCompatActivity() {
         mStartRecordButton.isEnabled = false
         mStopRecordButton.isEnabled = true
         mStartRecordButton.setColorFilter(Color.RED)
+        chronometer.base = SystemClock.elapsedRealtime()
+        timeWhenStopped = 0
+        chronometer.start()
         var toast = makeText(applicationContext, "Запись началась", Toast.LENGTH_LONG)
         toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
         toast.show()
@@ -112,6 +119,7 @@ class RecordActivity : AppCompatActivity() {
 
     //Остановить запись и сохранить результат в базу данных
     fun clickStopRecordButton(v: View) {
+        chronometer.stop()
         mediaRecorder!!.stop()
         mediaRecorder!!.release()
         //Уничтожаем обьект рекордера после каждой записи
@@ -121,6 +129,7 @@ class RecordActivity : AppCompatActivity() {
         mStopRecordButton.isEnabled = false
         mStartRecordButton.clearColorFilter()
         mPauseRecordButton.clearColorFilter()
+
         var toast = makeText(applicationContext, "Запись успешно завершена", Toast.LENGTH_LONG)
         toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
         toast.show()
@@ -134,10 +143,14 @@ class RecordActivity : AppCompatActivity() {
                 mediaRecorder!!.resume()
                 mPauseRecordButton.clearColorFilter()
                 isPressedpause = false
+                chronometer.base = SystemClock.elapsedRealtime() + timeWhenStopped
+                chronometer.start()
             }
         } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 mediaRecorder!!.pause()
+                timeWhenStopped = chronometer.getBase() - SystemClock.elapsedRealtime()
+                chronometer.stop()
             }
             mPauseRecordButton.setColorFilter(Color.RED)
             isPressedpause = true
