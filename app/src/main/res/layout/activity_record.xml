@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
-
+    android:padding="8dp">
 
     <LinearLayout
+        android:id="@+id/sound_input_block"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
         android:orientation="horizontal">
 
         <TextView
@@ -17,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:text="@string/input_sound"
-            android:textColor="@color/colorWhite"
+            android:textColor="@color/colorBlue"
             android:textSize="16sp" />
 
         <TextView
@@ -25,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:textColor="@color/colorWhite"
+            android:textColor="@color/colorBlue"
             android:textSize="16sp" />
     </LinearLayout>
 
@@ -33,6 +34,8 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/sound_input_block"
+        android:layout_centerHorizontal="true"
         android:layout_gravity="center"
         android:orientation="horizontal">
 
@@ -41,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:text="@string/frequency"
-            android:textColor="@color/colorWhite"
+            android:textColor="@color/colorBlue"
             android:textSize="16sp" />
 
         <TextView
@@ -49,7 +52,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:textColor="@color/colorWhite"
+            android:textColor="@color/colorBlue"
             android:textSize="16sp" />
     </LinearLayout>
 
@@ -57,30 +60,40 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:orientation="vertical">
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="40dp"
+        android:orientation="horizontal">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/start_record_button_id"
-            android:layout_width="300dp"
-            android:layout_height="60dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:onClick="clickStartRecordButton"
-            android:text="@string/start_record_button"
-            android:textColor="@color/colorWhite"
-            app:cornerRadius="16dp" />
-
-        <com.google.android.material.button.MaterialButton
+        <ImageButton
             android:id="@+id/stop_record_button_id"
-            android:layout_width="300dp"
-            android:layout_height="60dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:onClick="clickStopRecordButton"
-            android:text="@string/stop_record_button"
-            android:textColor="@color/colorWhite"
-            app:cornerRadius="16dp" />
+            android:padding="10dp"
+            android:src="@drawable/stop"
+            app:cornerRadius="30dp" />
+
+        <ImageButton
+            android:id="@+id/start_record_button_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:onClick="clickStartRecordButton"
+            android:padding="10dp"
+            android:src="@drawable/record"
+            app:cornerRadius="30dp" />
+
+        <ImageButton
+            android:id="@+id/pause_record_button_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:onClick="clickPauseRecordButton"
+            android:padding="10dp"
+            android:src="@drawable/pause"
+            app:cornerRadius="30dp" />
     </LinearLayout>
 
-</LinearLayout>
+</RelativeLayout>

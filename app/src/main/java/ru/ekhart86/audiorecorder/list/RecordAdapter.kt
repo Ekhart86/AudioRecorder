@@ -41,7 +41,7 @@ class RecordAdapter(
         holder.itemView.setOnClickListener {
             val intent = Intent(context, PlayActivity::class.java)
             intent.putExtra("id", recordsList[position].id)
-            intent.putExtra("value", recordsList[position].value)
+           // intent.putExtra("value", recordsList[position].value)
             intent.putExtra("date", recordsList[position].date)
             startActivity(context, intent, null)
         }

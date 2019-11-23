@@ -106,7 +106,7 @@ class BluetoothRecordActivity : AppCompatActivity() {
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.bluetooth)
+        setContentView(R.layout.activity_bluetooth)
         //Добавляем заголовок
         val actionBar = supportActionBar
         actionBar!!.title = getString(R.string.new_record)

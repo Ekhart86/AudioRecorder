@@ -16,6 +16,7 @@ import ru.ekhart86.audiorecorder.sql.DBHelper
 import java.io.File
 import java.io.IOException
 
+
 private const val PLAY_TAG = "AudioPlay"
 
 class PlayActivity : AppCompatActivity() {
@@ -39,7 +40,7 @@ class PlayActivity : AppCompatActivity() {
         mDate = findViewById(R.id.record_date_detail_id)
         val dateString = intent.getStringExtra("date")
         mDate.text = dateString
-        recordValue = intent.getStringExtra("value")
+//        recordValue = intent.getStringExtra("value")
         mPlay = findViewById(R.id.play_button_id)
 
     }
@@ -47,7 +48,14 @@ class PlayActivity : AppCompatActivity() {
 
     fun clickPlayButton(v: View) {
         var pathWrite = "${externalCacheDir!!.absolutePath}/audioPlay.mp4"
-        File(pathWrite).writeBytes(decodeBase64(recordValue))
+        File(pathWrite).writeBytes(
+            decodeBase64(
+                DBHelper.getСurrentRecord(
+                    this,
+                    currentId
+                )!!.value
+            )
+        )
         mediaPlayer = MediaPlayer()
 
         try {
