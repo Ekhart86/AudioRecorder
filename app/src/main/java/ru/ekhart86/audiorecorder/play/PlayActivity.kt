@@ -50,7 +50,7 @@ class PlayActivity : AppCompatActivity() {
         var pathWrite = "${externalCacheDir!!.absolutePath}/audioPlay.mp4"
         File(pathWrite).writeBytes(
             decodeBase64(
-                DBHelper.getСurrentRecord(
+                DBHelper.getCurrentRecord(
                     this,
                     currentId
                 )!!.value

@@ -42,7 +42,7 @@ class RecordActivity : AppCompatActivity() {
     private lateinit var mOutputFile: String
     private lateinit var audioInputText: TextView
     private lateinit var frecuencySamplingText: TextView
-    private var isPressedpause: Boolean = false
+    private var isPressedPause: Boolean = false
     private lateinit var chronometer: Chronometer
     private var timeWhenStopped: Long = 0
 
@@ -55,6 +55,7 @@ class RecordActivity : AppCompatActivity() {
         mStartRecordButton = findViewById(R.id.start_record_button_id)
         mStopRecordButton = findViewById(R.id.stop_record_button_id)
         mPauseRecordButton = findViewById(R.id.pause_record_button_id)
+        mPauseRecordButton.isEnabled = false
         chronometer = findViewById(R.id.view_timer)
 
         //Добавляем заголовок
@@ -109,12 +110,10 @@ class RecordActivity : AppCompatActivity() {
         mStartRecordButton.isEnabled = false
         mStopRecordButton.isEnabled = true
         mStartRecordButton.setColorFilter(Color.RED)
+        mPauseRecordButton.isEnabled = true
         chronometer.base = SystemClock.elapsedRealtime()
         timeWhenStopped = 0
         chronometer.start()
-        var toast = makeText(applicationContext, "Запись началась", Toast.LENGTH_LONG)
-        toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
-        toast.show()
     }
 
     //Остановить запись и сохранить результат в базу данных
@@ -127,33 +126,34 @@ class RecordActivity : AppCompatActivity() {
         DBHelper.addRecordToDB(this, mOutputFile)
         mStartRecordButton.isEnabled = true
         mStopRecordButton.isEnabled = false
+        mPauseRecordButton.isEnabled = false
         mStartRecordButton.clearColorFilter()
         mPauseRecordButton.clearColorFilter()
 
         var toast = makeText(applicationContext, "Запись успешно завершена", Toast.LENGTH_LONG)
-        toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0)
+        toast.setGravity(Gravity.BOTTOM, 0, 0)
         toast.show()
     }
 
 
-    fun clickPauseRecordButton(view: View) {
+    fun clickPauseRecordButton(v: View) {
 
-        if (isPressedpause) {
+        if (isPressedPause) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 mediaRecorder!!.resume()
                 mPauseRecordButton.clearColorFilter()
-                isPressedpause = false
+                isPressedPause = false
                 chronometer.base = SystemClock.elapsedRealtime() + timeWhenStopped
                 chronometer.start()
             }
         } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 mediaRecorder!!.pause()
-                timeWhenStopped = chronometer.getBase() - SystemClock.elapsedRealtime()
+                timeWhenStopped = chronometer.base - SystemClock.elapsedRealtime()
                 chronometer.stop()
             }
             mPauseRecordButton.setColorFilter(Color.RED)
-            isPressedpause = true
+            isPressedPause = true
         }
     }
 
@@ -169,7 +169,6 @@ class RecordActivity : AppCompatActivity() {
         }
         super.onDestroy()
     }
-
 
 }
 

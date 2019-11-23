@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:padding="8dp">
 
     <LinearLayout
+        android:id="@+id/inputSoundBluetoothBlock"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
         android:orientation="horizontal">
 
         <TextView
@@ -16,21 +19,25 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:text="@string/input_sound"
-            android:textColor="@color/colorWhite"
-            android:textSize="16sp" />
+            android:textColor="@color/colorBlue"
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/inputSoundBluetooth"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:textColor="@color/colorWhite"
-            android:textSize="16sp" />
+            android:textColor="@color/colorBlue"
+            android:textSize="20sp" />
     </LinearLayout>
 
+
     <LinearLayout
+        android:id="@+id/sampling_block"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/inputSoundBluetoothBlock"
+        android:layout_centerHorizontal="true"
         android:layout_gravity="center"
         android:orientation="horizontal">
 
@@ -39,53 +46,67 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:text="@string/frequency"
-            android:textColor="@color/colorWhite"
-            android:textSize="16sp" />
+            android:textColor="@color/colorBlue"
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/samplingFrequencyBluetooth"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:textColor="@color/colorWhite"
-            android:textSize="16sp" />
+            android:textColor="@color/colorBlue"
+            android:textSize="20sp" />
     </LinearLayout>
+
+    <Chronometer
+        android:id="@+id/view_timer_bluetooth"
+        android:layout_below="@id/sampling_block"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="150dp"
+        android:textSize="85sp"
+        android:textColor="@color/colorBlue"
+        tools:targetApi="29" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:orientation="vertical">
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="40dp"
+        android:orientation="horizontal">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnStart"
-            android:layout_width="300dp"
-            android:layout_height="60dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:onClick="clickStartBtn"
-            android:text="@string/start_record_button"
-            app:cornerRadius="16dp" />
-
-        <com.google.android.material.button.MaterialButton
+        <ImageButton
             android:id="@+id/btnStop"
-            android:layout_width="300dp"
-            android:layout_height="60dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:onClick="clickStopRecordingBtn"
-            android:text="@string/stop_record_button"
-            app:cornerRadius="16dp" />
+            android:padding="10dp"
+            android:src="@drawable/stop"
+            app:cornerRadius="30dp" />
 
-        <com.google.android.material.button.MaterialButton
+        <ImageButton
+            android:id="@+id/btnStart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:onClick="clickStartBtn"
+            android:padding="10dp"
+            android:src="@drawable/record"
+            app:cornerRadius="30dp" />
+
+        <ImageButton
             android:id="@+id/btnBluetooth"
-            android:layout_width="300dp"
-            android:layout_height="60dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:onClick="clickActivateBluetoothBtn"
-            android:text="@string/check_bluetooth"
-            app:cornerRadius="16dp" />
-
+            android:padding="10dp"
+            android:src="@drawable/bluetooth_button"
+            app:cornerRadius="30dp" />
     </LinearLayout>
-</LinearLayout>
+
+</RelativeLayout>
+

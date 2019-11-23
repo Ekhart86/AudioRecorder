@@ -38,7 +38,7 @@ class DBHelper(context: Context) :
         }
 
 
-        fun getСurrentRecord(context: Context, currentId: Int?): Record? {
+        fun getCurrentRecord(context: Context, currentId: Int?): Record? {
             var record: Record? = null
             var dbHelper = DBHelper(context)
             val database = dbHelper.writableDatabase

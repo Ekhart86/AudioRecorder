@@ -19,6 +19,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Base.Theme.MaterialComponents">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,22 +29,27 @@
         </activity>
         <activity
             android:name=".record.RecordActivity"
+            android:screenOrientation="portrait"
             android:parentActivityName=".MainActivity"
             android:theme="@style/Base.Theme.MaterialComponents" />
         <activity
             android:name=".settings.SettingsActivity"
+            android:screenOrientation="portrait"
             android:parentActivityName=".MainActivity"
             android:theme="@style/Base.Theme.MaterialComponents" />
         <activity
             android:name=".play.PlayActivity"
+            android:screenOrientation="portrait"
             android:parentActivityName=".list.ListRecordActivity"
             android:theme="@style/Base.Theme.MaterialComponents" />
         <activity
             android:name=".list.ListRecordActivity"
+            android:screenOrientation="portrait"
             android:parentActivityName=".MainActivity"
             android:theme="@style/Base.Theme.MaterialComponents" />
         <activity
             android:name=".bluetooth.BluetoothRecordActivity"
+            android:screenOrientation="portrait"
             android:parentActivityName=".MainActivity"
             android:theme="@style/Base.Theme.MaterialComponents" />
     </application>
