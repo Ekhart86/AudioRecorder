@@ -4,10 +4,10 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Color
 import android.media.MediaPlayer
+import android.os.Build
 import android.os.Bundle
 import android.os.SystemClock
 import android.util.Base64
-import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -15,21 +15,24 @@ import ru.ekhart86.audiorecorder.MainActivity
 import ru.ekhart86.audiorecorder.R
 import ru.ekhart86.audiorecorder.sql.DBHelper
 import java.io.File
-import java.io.IOException
 
 
 private const val PLAY_TAG = "AudioPlay"
 
 class PlayActivity : AppCompatActivity() {
 
-    private lateinit var mDate: TextView
-    private lateinit var playBtn: ImageButton
+    private lateinit var date: TextView
+    private lateinit var playButton: ImageButton
+    private lateinit var pauseButton: ImageButton
     private var mediaPlayer: MediaPlayer? = null
     private var currentId: Int? = null
     private var pathWrite = ""
     private lateinit var dbHelper: DBHelper
     private lateinit var chronometer: Chronometer
     private var timeWhenStopped: Long = 0
+    private var isPressedPause: Boolean = false
+    private var isPressedPlay: Boolean = false
+    private var lengthTime: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,12 +41,12 @@ class PlayActivity : AppCompatActivity() {
         val actionBar = supportActionBar
         currentId = intent.getIntExtra("id", 0)
         actionBar!!.title = "Запись № $currentId"
-        mDate = findViewById(R.id.record_date_detail_id)
+        date = findViewById(R.id.record_date_detail_id)
         val dateString = intent.getStringExtra("date")
-        mDate.text = dateString
-        playBtn = findViewById(R.id.play_button_id)
+        date.text = dateString
+        playButton = findViewById(R.id.play_button_id)
         chronometer = findViewById(R.id.view_timer_play)
-        //Путь куда запишется файл из базы
+        pauseButton = findViewById(R.id.pauseButton)
         pathWrite = "${externalCacheDir!!.absolutePath}/audioPlay.mp4"
         File(pathWrite).writeBytes(
             decodeBase64(
@@ -57,35 +60,66 @@ class PlayActivity : AppCompatActivity() {
     }
 
     fun clickPlayButton(v: View) {
-        mediaPlayer = MediaPlayer()
-        try {
+        if (!isPressedPlay) {
+            mediaPlayer = MediaPlayer()
             mediaPlayer!!.setDataSource(pathWrite)
             mediaPlayer!!.prepare()
             mediaPlayer!!.start()
-            playBtn.setColorFilter(Color.RED)
+            playButton.setColorFilter(Color.RED)
             chronometer.base = SystemClock.elapsedRealtime()
             timeWhenStopped = 0
             chronometer.start()
+            isPressedPlay = true
+
             mediaPlayer!!.setOnCompletionListener {
-                playBtn.isEnabled = true
-                playBtn.clearColorFilter()
+                playButton.isEnabled = true
+                isPressedPlay = false
+                playButton.clearColorFilter()
                 chronometer.stop()
+                lengthTime = 0
             }
-        } catch (e: IOException) {
-            Log.e(PLAY_TAG, "Ошибка воспроизведения аудиозаписи.")
         }
     }
 
     fun clickStopPlayButton(view: View) {
 
-        if (mediaPlayer != null && mediaPlayer!!.isPlaying) {
+        if (mediaPlayer != null) {
             chronometer.stop()
             mediaPlayer!!.stop()
-            playBtn.clearColorFilter()
+            playButton.clearColorFilter()
+            pauseButton.clearColorFilter()
             mediaPlayer = null
+            playButton.isEnabled = true
+            isPressedPause = false
+            isPressedPlay = false
+            lengthTime = 0
         }
     }
 
+    fun clickPauseButton(view: View) {
+        if(isPressedPlay) {
+            if (isPressedPause) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    pauseButton.clearColorFilter()
+                    chronometer.base = SystemClock.elapsedRealtime() + timeWhenStopped
+                    chronometer.start()
+                    mediaPlayer!!.seekTo(lengthTime)
+                    mediaPlayer!!.start()
+                    isPressedPause = false
+                }
+            } else {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    mediaPlayer!!.pause()
+                    lengthTime = mediaPlayer!!.currentPosition
+                    timeWhenStopped = chronometer.base - SystemClock.elapsedRealtime()
+                    chronometer.stop()
+                    pauseButton.setColorFilter(Color.RED)
+                    isPressedPause = true
+                }
+
+            }
+        }
+    }
 
     fun clickRemoveButton(v: View) {
 
@@ -109,7 +143,8 @@ class PlayActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
-        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Нет"
+        alertDialog.setButton(
+            AlertDialog.BUTTON_NEGATIVE, "Нет"
         ) { dialog, _ -> dialog.dismiss() }
         alertDialog.show()
 
@@ -137,4 +172,5 @@ class PlayActivity : AppCompatActivity() {
         finish()
         super.onDestroy()
     }
+
 }
