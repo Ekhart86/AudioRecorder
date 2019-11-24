@@ -17,7 +17,7 @@
             android:id="@+id/record_date_detail_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/colorBlue"
+            android:textColor="@color/colorWhite"
             android:textSize="20sp" />
     </LinearLayout>
 
