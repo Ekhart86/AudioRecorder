@@ -38,6 +38,7 @@ class RecordAdapter(
         var recordNumber = "Запись № ${recordsList[position].id}"
         holder.recordName.text = recordNumber
         holder.dbDateId.text = recordsList[position].date
+        holder.arrow.setImageResource(R.drawable.arrow)
         holder.itemView.setOnClickListener {
             val intent = Intent(context, PlayActivity::class.java)
             intent.putExtra("id", recordsList[position].id)
@@ -49,5 +50,6 @@ class RecordAdapter(
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val recordName = view.recordName!!
         val dbDateId = view.dbDateId!!
+        val arrow = view.arrow!!
     }
 }

@@ -99,8 +99,16 @@ class BluetoothRecordActivity : AppCompatActivity() {
                     handleBluetoothStateChange(BluetoothState.AVAILABLE)
                     startButton.clearColorFilter()
                     stopButton.clearColorFilter()
-
+                    var toast =
+                        Toast.makeText(
+                            applicationContext,
+                            "Bluetooth-гарнитура успешно подключена",
+                            Toast.LENGTH_LONG
+                        )
+                    toast.setGravity(Gravity.BOTTOM, 0, 0)
+                    toast.show()
                 }
+
                 AudioManager.SCO_AUDIO_STATE_CONNECTING -> {
                     Log.i(
                         TAG,
@@ -115,6 +123,7 @@ class BluetoothRecordActivity : AppCompatActivity() {
                     startButton.setColorFilter(Color.GRAY)
                     stopButton.setColorFilter(Color.GRAY)
                 }
+
                 AudioManager.SCO_AUDIO_STATE_DISCONNECTED -> {
                     Log.i(
                         TAG,
@@ -123,7 +132,16 @@ class BluetoothRecordActivity : AppCompatActivity() {
                     handleBluetoothStateChange(BluetoothState.UNAVAILABLE)
                     startButton.setColorFilter(Color.GRAY)
                     stopButton.setColorFilter(Color.GRAY)
+                    var toast =
+                        Toast.makeText(
+                            applicationContext,
+                            "Bluetooth-гарнитура отключена",
+                            Toast.LENGTH_LONG
+                        )
+                    toast.setGravity(Gravity.BOTTOM, 0, 0)
+                    toast.show()
                 }
+
                 AudioManager.SCO_AUDIO_STATE_ERROR -> {
                     Log.i(
                         TAG,
@@ -202,7 +220,6 @@ class BluetoothRecordActivity : AppCompatActivity() {
 
 
     private fun startRecording() {
-        // В зависимости от устройства может потребоваться изменить AudioSource, DEFAULT либо VOICE_COMMUNICATION
         recorder = AudioRecord(
             MediaRecorder.AudioSource.VOICE_COMMUNICATION,
             currentFrecuencySampling,
@@ -253,6 +270,14 @@ class BluetoothRecordActivity : AppCompatActivity() {
 
 
     private fun activateBluetoothSco() {
+        var toast =
+            Toast.makeText(
+                applicationContext,
+                "Поиск Bluetooth-гарнитуры ...",
+                Toast.LENGTH_LONG
+            )
+        toast.setGravity(Gravity.BOTTOM, 0, 0)
+        toast.show()
         if (!audioManager!!.isBluetoothScoAvailableOffCall) {
             Log.e(
                 TAG, "SCO не доступен, запись невозможна"
@@ -265,7 +290,7 @@ class BluetoothRecordActivity : AppCompatActivity() {
     }
 
     private fun bluetoothStateChanged(state: BluetoothState) {
-        Log.i(TAG, "Bluetooth state changed to:$state")
+        Log.i(TAG, "Состояние Bluetooth изменено на:$state")
         if (BluetoothState.UNAVAILABLE == state && recordingInProgress.get()) {
             stopRecording()
         }
@@ -346,5 +371,8 @@ class BluetoothRecordActivity : AppCompatActivity() {
         pcmEncoder.stop()
     }
 
+    private fun showDisconnectMessage() {
+
+    }
 
 }

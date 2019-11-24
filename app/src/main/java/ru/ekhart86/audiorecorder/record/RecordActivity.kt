@@ -61,6 +61,7 @@ class RecordActivity : AppCompatActivity() {
         //Добавляем заголовок
         val actionBar = supportActionBar
         actionBar!!.title = getString(R.string.new_record)
+
         //Путь до папки с кэшем
         mOutputFile = "${externalCacheDir!!.absolutePath}/audioRecord.mp4"
 
