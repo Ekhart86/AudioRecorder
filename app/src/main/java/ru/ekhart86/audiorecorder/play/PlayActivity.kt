@@ -17,8 +17,6 @@ import ru.ekhart86.audiorecorder.sql.DBHelper
 import java.io.File
 
 
-private const val PLAY_TAG = "AudioPlay"
-
 class PlayActivity : AppCompatActivity() {
 
     private lateinit var date: TextView
@@ -97,7 +95,7 @@ class PlayActivity : AppCompatActivity() {
     }
 
     fun clickPauseButton(view: View) {
-        if(isPressedPlay) {
+        if (isPressedPlay) {
             if (isPressedPause) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                     pauseButton.clearColorFilter()

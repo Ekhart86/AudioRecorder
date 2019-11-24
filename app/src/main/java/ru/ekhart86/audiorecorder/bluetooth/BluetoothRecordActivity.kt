@@ -323,7 +323,7 @@ class BluetoothRecordActivity : AppCompatActivity() {
                         val result = recorder!!.read(buffer, getBufferSize())
                         if (result < 0) {
                             throw RuntimeException(
-                                "Reading of audio buffer failed: " + getBufferReadFailureReason(
+                                "Сбой чтения аудио буфера: " + getBufferReadFailureReason(
                                     result
                                 )
                             )
@@ -337,7 +337,7 @@ class BluetoothRecordActivity : AppCompatActivity() {
                     }
                 }
             } catch (e: IOException) {
-                throw RuntimeException("Writing of recorded audio failed", e)
+                throw RuntimeException("Не удалось выполнить запись данных", e)
             }
         }
 
@@ -369,10 +369,6 @@ class BluetoothRecordActivity : AppCompatActivity() {
             e.printStackTrace()
         }
         pcmEncoder.stop()
-    }
-
-    private fun showDisconnectMessage() {
-
     }
 
 }
