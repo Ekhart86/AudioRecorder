@@ -1,5 +1,6 @@
 package ru.ekhart86.audiorecorder.play
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Color
 import android.media.MediaPlayer
@@ -8,10 +9,7 @@ import android.os.SystemClock
 import android.util.Base64
 import android.util.Log
 import android.view.View
-import android.widget.Chronometer
-import android.widget.ImageButton
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import ru.ekhart86.audiorecorder.MainActivity
 import ru.ekhart86.audiorecorder.R
@@ -90,17 +88,38 @@ class PlayActivity : AppCompatActivity() {
 
 
     fun clickRemoveButton(v: View) {
-        dbHelper = DBHelper(this)
-        val database = dbHelper.writableDatabase
-        val removeId = arrayOf(currentId.toString())
-        database.delete(DBHelper.TABLE_RECORDS, "_id = ?", removeId)
-        dbHelper.close()
-        Toast.makeText(applicationContext, "Запись $currentId успешно удалена", Toast.LENGTH_LONG)
-            .show()
-        val intent = Intent(this@PlayActivity, MainActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        startActivity(intent)
-        finish()
+
+        val alertDialog = AlertDialog.Builder(this).create()
+        alertDialog.setTitle("Предупреждение")
+        alertDialog.setMessage("Вы точно хотите удалить запись № $currentId?")
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Да") { _, _ ->
+            dbHelper = DBHelper(this)
+            val database = dbHelper.writableDatabase
+            val removeId = arrayOf(currentId.toString())
+            database.delete(DBHelper.TABLE_RECORDS, "_id = ?", removeId)
+            dbHelper.close()
+            Toast.makeText(
+                applicationContext,
+                "Запись $currentId успешно удалена",
+                Toast.LENGTH_LONG
+            )
+                .show()
+            val intent = Intent(this@PlayActivity, MainActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+            finish()
+        }
+        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Нет"
+        ) { dialog, _ -> dialog.dismiss() }
+        alertDialog.show()
+
+        val btnPositive = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE)
+        val btnNegative = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE)
+        val layoutParams = btnPositive.layoutParams as LinearLayout.LayoutParams
+        layoutParams.weight = 5f
+        layoutParams.leftMargin = 20
+        btnPositive.layoutParams = layoutParams
+        btnNegative.layoutParams = layoutParams
     }
 
 

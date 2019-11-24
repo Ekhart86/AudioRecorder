@@ -17,4 +17,5 @@
     <string name="high_frecuency">44100</string>
     <string name="check_bluetooth">Проверка Bluetooth</string>
     <string name="pause_record_button">Пауза</string>
+    <string name="cancel">Отмена</string>
 </resources>
