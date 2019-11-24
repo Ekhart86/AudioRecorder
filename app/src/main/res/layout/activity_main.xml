@@ -14,35 +14,38 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/record_audio_button_id"
-            android:layout_width="300dp"
-            android:layout_height="60dp"
+            android:layout_width="280dp"
+            android:layout_height="65dp"
             android:layout_gravity="center"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:onClick="clickCreateNewButton"
             android:text="@string/new_record"
             android:textColor="@color/colorWhite"
-            app:cornerRadius="16dp" />
+            android:textSize="15sp"
+            app:cornerRadius="20dp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/audio_list_button_id"
-            android:layout_width="300dp"
-            android:layout_height="60dp"
+            android:layout_width="280dp"
+            android:layout_height="65dp"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:onClick="clickListAudioButton"
             android:text="@string/audio_list_button"
             android:textColor="@color/colorWhite"
-            app:cornerRadius="16dp" />
+            android:textSize="15sp"
+            app:cornerRadius="20dp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/settings_button_id"
-            android:layout_width="300dp"
-            android:layout_height="60dp"
+            android:layout_width="280dp"
+            android:layout_height="65dp"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:onClick="clickSettingsButton"
             android:text="@string/settings_button"
             android:textColor="@color/colorWhite"
-            app:cornerRadius="16dp" />
+            android:textSize="15sp"
+            app:cornerRadius="20dp" />
     </LinearLayout>
 </LinearLayout>

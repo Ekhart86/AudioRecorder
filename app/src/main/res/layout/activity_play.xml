@@ -22,7 +22,7 @@
     </LinearLayout>
 
     <Chronometer
-        android:id="@+id/view_timer"
+        android:id="@+id/view_timer_play"
         android:layout_below="@id/date_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -41,16 +41,6 @@
         android:orientation="horizontal">
 
         <ImageButton
-            android:id="@+id/stop_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:onClick="clickStopPlayButton"
-            android:padding="10dp"
-            android:src="@drawable/stop"
-            app:cornerRadius="30dp" />
-
-        <ImageButton
             android:id="@+id/play_button_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -58,6 +48,16 @@
             android:onClick="clickPlayButton"
             android:padding="10dp"
             android:src="@drawable/play"
+            app:cornerRadius="30dp" />
+
+        <ImageButton
+            android:id="@+id/stop_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:onClick="clickStopPlayButton"
+            android:padding="10dp"
+            android:src="@drawable/stop"
             app:cornerRadius="30dp" />
 
         <ImageButton
