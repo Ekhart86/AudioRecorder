@@ -14,14 +14,14 @@
         <TextView
             android:id="@+id/recordName"
             android:textColor="@color/colorWhite"
-            android:textSize="17sp"
+            android:textSize="15sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <TextView
             android:id="@+id/dbDateId"
             android:textColor="@color/colorWhite"
-            android:textSize="17sp"
+            android:textSize="15sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>

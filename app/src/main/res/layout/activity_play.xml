@@ -41,16 +41,6 @@
         android:orientation="horizontal">
 
         <ImageButton
-            android:id="@+id/play_button_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:onClick="clickPlayButton"
-            android:padding="10dp"
-            android:src="@drawable/play"
-            app:cornerRadius="30dp" />
-
-        <ImageButton
             android:id="@+id/pauseButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -58,6 +48,16 @@
             android:onClick="clickPauseButton"
             android:padding="10dp"
             android:src="@drawable/pause"
+            app:cornerRadius="30dp" />
+
+        <ImageButton
+            android:id="@+id/play_button_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:onClick="clickPlayButton"
+            android:padding="10dp"
+            android:src="@drawable/play"
             app:cornerRadius="30dp" />
 
         <ImageButton
