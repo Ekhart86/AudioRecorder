@@ -73,6 +73,7 @@ class PlayActivity : AppCompatActivity() {
                 playButton.isEnabled = true
                 isPressedPlay = false
                 playButton.clearColorFilter()
+                pauseButton.clearColorFilter()
                 chronometer.stop()
                 lengthTime = 0
             }

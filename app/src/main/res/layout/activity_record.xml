@@ -59,13 +59,13 @@
 
     <Chronometer
         android:id="@+id/view_timer"
-        android:layout_below="@id/sampling_block"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/sampling_block"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="150dp"
-        android:textSize="85sp"
         android:textColor="@color/colorBlue"
+        android:textSize="85sp"
         tools:targetApi="29" />
 
     <LinearLayout
@@ -77,13 +77,13 @@
         android:orientation="horizontal">
 
         <ImageButton
-            android:id="@+id/stop_record_button_id"
+            android:id="@+id/pause_record_button_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:onClick="clickStopRecordButton"
+            android:onClick="clickPauseRecordButton"
             android:padding="10dp"
-            android:src="@drawable/stop"
+            android:src="@drawable/pause"
             app:cornerRadius="30dp" />
 
         <ImageButton
@@ -97,14 +97,15 @@
             app:cornerRadius="30dp" />
 
         <ImageButton
-            android:id="@+id/pause_record_button_id"
+            android:id="@+id/stop_record_button_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:onClick="clickPauseRecordButton"
+            android:onClick="clickStopRecordButton"
             android:padding="10dp"
-            android:src="@drawable/pause"
+            android:src="@drawable/stop"
             app:cornerRadius="30dp" />
+
     </LinearLayout>
 
 </RelativeLayout>
