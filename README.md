@@ -4,9 +4,10 @@
 Записи хранятся в базе данных приложения, поэтому приложение не требует разрешение на доступ к папкам смартфона.
 Собранный apk файл приложения лежит в корне проекта.
 
-![Screenshot_20191126_200001_ru ekhart86 audiorecorder](https://user-images.githubusercontent.com/25115868/69655682-258fd000-1088-11ea-8fa1-0f3cbbe9f91f.jpg)
+![record](https://user-images.githubusercontent.com/25115868/69655981-bc5c8c80-1088-11ea-8390-c8f9b8497a4f.jpg)
 
-![Screenshot_20191126_200011_ru ekhart86 audiorecorder](https://user-images.githubusercontent.com/25115868/69655738-422c0800-1088-11ea-9e16-c39aa783e917.jpg)
+![list](https://user-images.githubusercontent.com/25115868/69655978-bbc3f600-1088-11ea-9e93-8464e4f2b375.jpg)
+
+![play](https://user-images.githubusercontent.com/25115868/69655979-bbc3f600-1088-11ea-9d55-f09e75c691c5.jpg)
 
 
-![Screenshot_20191126_200031_ru ekhart86 audiorecorder](https://user-images.githubusercontent.com/25115868/69655759-4f48f700-1088-11ea-9d59-84feb9ba363a.jpg)
